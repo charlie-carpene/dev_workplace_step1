@@ -1,8 +1,10 @@
 require 'csv'
 
 class Parser
-    def read_file(file)
-        return File.read(file)
+    attr_accessor :path
+
+    def read_file
+        return File.read(self.path)
     end
 
     def parse(file, header)
@@ -18,5 +20,12 @@ class Parser
         replace_semicolon = temp_file.gsub(/;/, ",")
         add_back_comma_as_semicolon = replace_semicolon.gsub("^*^", ";")
         return add_back_comma_as_semicolon
+    end
+
+    def print_in_terminal(cleaned_file, file_has_header)
+        csv_file = self.parse(cleaned_file, file_has_header)
+        csv_file.each do |line|
+           puts line.inspect
+       end
     end
 end
